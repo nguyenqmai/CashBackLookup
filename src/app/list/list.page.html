@@ -4,16 +4,16 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      List
+      List of Credit Cards
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of items">
+    <ion-item *ngFor="let item of currentCards">
       <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
+      {{item.cardName}}
       <div class="item-note" slot="end">
         {{item.note}}
       </div>
@@ -24,4 +24,9 @@
       You navigated here from <b>{{selectedItem.title }}</b>
     </div>
   -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

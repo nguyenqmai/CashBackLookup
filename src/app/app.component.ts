@@ -3,6 +3,10 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { YearlyRewardPerCard } from "./model/yearly-reward-per-card.type";
+import { RewardCategoryDetail } from './model/reward-category-detail.type';
+
+let rewardCardCollection = new Map<string, YearlyRewardPerCard>();
 
 @Component({
   selector: 'app-root',
@@ -16,7 +20,7 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
+      title: 'Credit Cards',
       url: '/list',
       icon: 'list'
     }
