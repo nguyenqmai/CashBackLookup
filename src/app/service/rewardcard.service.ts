@@ -5,18 +5,6 @@ import { RewardCard } from '../model/reward-card.type';
   providedIn: 'root'
 })
 export class RewardCardService {
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
   private cards: Array<RewardCard> = [];
 
   constructor() { 
@@ -24,7 +12,6 @@ export class RewardCardService {
       this.cards.push(
         new RewardCard('CCard ' + i,
           'Notes for card #' + i, 
-          this.icons[Math.floor(Math.random() * this.icons.length)]
         )
       );
     }
@@ -35,7 +22,7 @@ export class RewardCardService {
   }
 
   public newBlankCard() {
-    return new RewardCard('', '', this.icons[Math.floor(Math.random() * this.icons.length)]);
+    return new RewardCard();
   }
 
   public saveCard(item: RewardCard) {

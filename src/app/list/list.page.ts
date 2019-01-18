@@ -10,6 +10,20 @@ import { RewardCard } from '../model/reward-card.type';
   styleUrls: ['list.page.scss']
 })
 export class ListPage implements OnInit {
+
+  private icons = [
+    'flask',
+    'wifi',
+    'beer',
+    'football',
+    'basketball',
+    'paper-plane',
+    'american-football',
+    'boat',
+    'bluetooth',
+    'build'
+  ];
+  
   private selectedCard: RewardCard;
   private currentCards: RewardCard[];
 

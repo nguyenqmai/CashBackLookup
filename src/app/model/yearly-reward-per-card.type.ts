@@ -1,12 +1,13 @@
 
 import { RewardCategoryDetail } from "./reward-category-detail.type";
+import { isNumber } from "util";
 
 export enum Month {
-    January = 1,
+    January,
     February,
     March,
     April,
-    Map,
+    May,
     June,
     July,
     August,
@@ -17,12 +18,16 @@ export enum Month {
 }
 
 export class YearlyRewardPerCard {
-    rewardPerMonth: Map<Month, string[]>;
+    rewardPerMonth: Map<Month, string>;
 
     constructor() {
-        this.rewardPerMonth = new Map<Month, string[]>();
-        Object.keys(Month).filter(key => isNaN(Number(key))).forEach(month => {
-            this.rewardPerMonth.set(Month[month], [])
+        this.rewardPerMonth = new Map<Month, string>();
+        var tmp = Object.keys(Month).filter(key => !isNaN(Number(key)));
+        // console.log("YearlyRewardPerCard constructor " + JSON.stringify(tmp));
+
+        // console.log("YearlyRewardPerCard constructor " + Month[tmp[1]]);
+        tmp.forEach(month => {
+            this.rewardPerMonth.set(Month[month], '')
         })
     }
 }
