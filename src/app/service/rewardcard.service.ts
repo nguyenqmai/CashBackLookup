@@ -1,31 +1,44 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
+
 import { RewardCard } from '../model/reward-card.type';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RewardCardService {
-  private cards: Array<RewardCard> = [];
+  private cards = new Map<string, RewardCard>();
 
-  constructor() { 
-    for (let i = 1; i < 11; i++) {
-      this.cards.push(
-        new RewardCard('CCard ' + i,
-          'Notes for card #' + i, 
-        )
-      );
-    }
+
+  constructor(private storage: Storage) { 
+    this.storage.get("rewardCards").then((value) => {
+      if (value) {
+        <RewardCard[]>value.forEach(card => {this.cards.set(card.cardId, card);})
+      } else {
+        for (let i = 1; i < 2; i++) {
+          var cardId = RewardCard.getNextCardId() + i;
+          this.saveCard(new RewardCard(cardId, 'CCard ' + i));
+        }
+      }
+    });
   }
 
   public getCurrentCards() {
-    return this.cards;
+    var ret: RewardCard[] = [];
+    this.cards.forEach((card, idKey, m) => {
+      ret.push(card);
+    });
+
+    return ret;
   }
 
   public newBlankCard() {
-    return new RewardCard();
+    return new RewardCard(RewardCard.getNextCardId());
   }
 
-  public saveCard(item: RewardCard) {
-    this.cards.push(item);
+  public saveCard(rewardCard: RewardCard) {
+    this.cards.set(rewardCard.cardId, rewardCard);
+    this.storage.set("rewardCards", this.getCurrentCards());
   }
 }

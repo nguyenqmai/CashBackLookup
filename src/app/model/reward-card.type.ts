@@ -1,17 +1,39 @@
 
-import { RewardCategoryDetail } from "./reward-category-detail.type";
-import { Month, YearlyRewardPerCard } from "./yearly-reward-per-card.type";
-
+import { Month, MonthlyRewardDetail } from "./monthly-reward-detail.type";
+import { DatePipe } from '@angular/common';
 
 export class RewardCard {
-    cardName: string;
-    notes: string;
-    rewardDetail: YearlyRewardPerCard;
+    static datePipe = new DatePipe('en-US');
+    static getNextCardId() {
+        return RewardCard.datePipe.transform(Date.now(), 'yyyyMMdd_HHmmss_SSS');
+    }
 
-    constructor(cardName?: string, notes?: string, rewardDetail?: YearlyRewardPerCard) {
+    static getCurrentMonth() {
+        return RewardCard.datePipe.transform(Date.now(), 'LLLL');
+    }
+
+    cardId: string;
+    cardName: string;
+    rewardDetail: MonthlyRewardDetail[];
+
+
+    constructor(cardId: string, cardName?: string, rewardDetail?: MonthlyRewardDetail[]) {
+        this.cardId = cardId;
         this.cardName = cardName ? cardName : "";
-        this.notes = notes ? notes : "";
-        this.rewardDetail = rewardDetail ? rewardDetail :  new YearlyRewardPerCard();
+        if (rewardDetail) {
+            this.rewardDetail = rewardDetail;
+            console.log("new Reward card " + JSON.stringify(this))
+        } else {
+
+            this.rewardDetail = [];
+            var tmp = Object.keys(Month).filter(key => isNaN(Number(key)));
+            for(let month of tmp) {
+                this.rewardDetail.push(new MonthlyRewardDetail(<Month>Month[month], ""))
+            }
+            console.log("new Reward card new YearlyRewardPerCard" + JSON.stringify(this))
+        }
+
+
     }
 }
 

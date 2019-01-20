@@ -9,13 +9,9 @@
 
     <form [formGroup]="cardInputForm">
       <ion-list>
-      <ion-item>
+        <ion-item>
         <ion-label position="floating">Credit card name</ion-label>
         <ion-input clearOnEdit name="creditCardName" formControlName="cardName"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Note</ion-label>
-        <ion-input clearOnEdit name="note" formControlName="notes"></ion-input>
       </ion-item>
 
       <ion-item-divider color="secondary">
@@ -26,7 +22,7 @@
       <div formArrayName="rewardDetail">  
         <ion-item *ngFor="let rewardMonth of cardInputForm.controls.rewardDetail.controls; let i=index" [formGroupName]="i"> 
           <ion-label position="floating">{{rewardMonth.controls.month.value}}</ion-label>
-          <ion-input clearOnEdit name="rewardNote" formControlName="rewardNote"></ion-input>
+          <ion-input clearOnEdit name="rewardNote" formControlName="rewardDetail"></ion-input>
         </ion-item>
       </div>
       </ion-list>

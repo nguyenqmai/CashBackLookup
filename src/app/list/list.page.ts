@@ -3,6 +3,7 @@ import { ToastController, ModalController } from '@ionic/angular';
 import { RewardCardService } from '../service/rewardcard.service';
 import { NewCard } from '../modal/newcard.modal';
 import { RewardCard } from '../model/reward-card.type';
+import { Month, MonthlyRewardDetail } from "../model/monthly-reward-detail.type";
 
 @Component({
   selector: 'app-list',
@@ -11,20 +12,19 @@ import { RewardCard } from '../model/reward-card.type';
 })
 export class ListPage implements OnInit {
 
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
+  // private icons = [
+  //   'flask',
+  //   'wifi',
+  //   'beer',
+  //   'football',
+  //   'basketball',
+  //   'paper-plane',
+  //   'american-football',
+  //   'boat',
+  //   'bluetooth',
+  //   'build'
+  // ];
   
-  private selectedCard: RewardCard;
   private currentCards: RewardCard[];
 
   constructor(private cardInfoService: RewardCardService,
@@ -42,6 +42,18 @@ export class ListPage implements OnInit {
     this.currentCards = this.cardInfoService.getCurrentCards();
   }
 
+  getCurrentMonthReward(card: RewardCard) {
+    var currentMonth: Month = <Month>Month[RewardCard.getCurrentMonth()]
+    // console.log("current month is " +currentMonth)
+    for (let rwDetail of card.rewardDetail) {
+        if (rwDetail.month == currentMonth) {
+            // console.log("current month reward is " +rwDetail.rewardDetail)
+            return rwDetail.rewardDetail;
+        }
+    }
+    return "No reward information"
+}
+
   private async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -57,7 +69,16 @@ export class ListPage implements OnInit {
     this.presentToast("FAB button clicked");
   }
 
-  private async presentModal() {
+  private newCard() {
+    this.displayCardInModal(this.cardInfoService.newBlankCard());
+  }
+
+  private updateCard(cardItem: RewardCard) {
+    console.log("update current card " + JSON.stringify(cardItem))
+    this.displayCardInModal(cardItem);
+  }
+
+  private async displayCardInModal(cardItem: RewardCard) {
     console.log("on FAB button clicked...show modal");
 
     const modal = await this.modalController.create({
@@ -65,7 +86,7 @@ export class ListPage implements OnInit {
       componentProps: { 
         modalTitle: "New Credit Card Screen",
         modalHeader: "Credit Card Info",
-        card: this.cardInfoService.newBlankCard() 
+        card: cardItem
       }
     });
     // return await modal.present();
