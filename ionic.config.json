@@ -1,5 +1,7 @@
 {
   "name": "CashBackLookup",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

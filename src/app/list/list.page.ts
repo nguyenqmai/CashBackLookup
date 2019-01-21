@@ -11,21 +11,8 @@ import { Month, MonthlyRewardDetail } from "../model/monthly-reward-detail.type"
   styleUrls: ['list.page.scss']
 })
 export class ListPage implements OnInit {
-
-  // private icons = [
-  //   'flask',
-  //   'wifi',
-  //   'beer',
-  //   'football',
-  //   'basketball',
-  //   'paper-plane',
-  //   'american-football',
-  //   'boat',
-  //   'bluetooth',
-  //   'build'
-  // ];
-  
-  private currentCards: RewardCard[];
+  currentMonth: Month;
+  currentCards: RewardCard[];
 
   constructor(private cardInfoService: RewardCardService,
       private toastController: ToastController,
@@ -34,19 +21,25 @@ export class ListPage implements OnInit {
   }
 
   ngOnInit() {
+    // this.currentMonth = <Month>Month[RewardCard.getCurrentMonth()];
+    this.currentMonth = <Month>Month[RewardCard.getCurrentMonth()];
     this.updateCurrentCards();
   }
 
+  getAllRewardMonths() {
+    return RewardCard.getAllRewardMonth();
+  }
 
   updateCurrentCards() {
+    if (this.currentCards && this.currentCards.length > 0)
+      this.currentCards.splice(0, this.currentCards.length)
     this.currentCards = this.cardInfoService.getCurrentCards();
   }
 
   getCurrentMonthReward(card: RewardCard) {
-    var currentMonth: Month = <Month>Month[RewardCard.getCurrentMonth()]
     // console.log("current month is " +currentMonth)
     for (let rwDetail of card.rewardDetail) {
-        if (rwDetail.month == currentMonth) {
+        if (rwDetail.month == this.currentMonth) {
             // console.log("current month reward is " +rwDetail.rewardDetail)
             return rwDetail.rewardDetail;
         }

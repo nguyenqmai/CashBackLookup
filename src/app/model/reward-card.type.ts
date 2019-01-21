@@ -12,6 +12,10 @@ export class RewardCard {
         return RewardCard.datePipe.transform(Date.now(), 'LLLL');
     }
 
+    static getAllRewardMonth() {
+        return Object.keys(Month).filter(key => isNaN(Number(key)));
+    }
+
     cardId: string;
     cardName: string;
     rewardDetail: MonthlyRewardDetail[];
@@ -26,8 +30,7 @@ export class RewardCard {
         } else {
 
             this.rewardDetail = [];
-            var tmp = Object.keys(Month).filter(key => isNaN(Number(key)));
-            for(let month of tmp) {
+            for(let month of RewardCard.getAllRewardMonth()) {
                 this.rewardDetail.push(new MonthlyRewardDetail(<Month>Month[month], ""))
             }
             console.log("new Reward card new YearlyRewardPerCard" + JSON.stringify(this))
