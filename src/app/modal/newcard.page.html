@@ -26,8 +26,21 @@
         </ion-item>
       </div>
       </ion-list>
-      <ion-button (click)="cancel()">Cancel</ion-button>
-      <ion-button (click)="save()">Save</ion-button>      
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div>
+              <ion-button color="danger" (click)="delete()" *ngIf="card.cardId.length > 0">Delete</ion-button> 
+            </div>
+          </ion-col>    
+          <ion-col>
+            <div>
+              <ion-button (click)="cancel()">Cancel</ion-button>
+              <ion-button (click)="save()" [disabled]="!cardInputForm.valid">Save</ion-button> 
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </form>
   </ion-content>
   

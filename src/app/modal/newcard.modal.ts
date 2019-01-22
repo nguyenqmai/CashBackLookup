@@ -39,7 +39,12 @@ export class NewCard {
       this.card.rewardDetail.push(new MonthlyRewardDetail(pair.month, pair.rewardDetail))
     })
 
-    this.modalController.dismiss(this.card);
+    this.modalController.dismiss(this.card, "save");
+  }
+
+  delete() {
+    console.log("on modal button clicked...delete");
+    this.modalController.dismiss(this.card, "delete");
   }
 
   buildFormGroup() {
@@ -52,7 +57,7 @@ export class NewCard {
     var rewardDetailFormArray = form.get("rewardDetail") as FormArray;
 
     this.card.rewardDetail.forEach((item) => {
-      console.log("item " + JSON.stringify(item))
+      // console.log("item " + JSON.stringify(item))
       rewardDetailFormArray.push(this.formBuilder.group({month: item.month, rewardDetail: item.rewardDetail}));
     })
     return form;

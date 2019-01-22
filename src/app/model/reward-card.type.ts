@@ -26,14 +26,14 @@ export class RewardCard {
         this.cardName = cardName ? cardName : "";
         if (rewardDetail) {
             this.rewardDetail = rewardDetail;
-            console.log("new Reward card " + JSON.stringify(this))
+            // console.log("new Reward card " + JSON.stringify(this))
         } else {
 
             this.rewardDetail = [];
             for(let month of RewardCard.getAllRewardMonth()) {
                 this.rewardDetail.push(new MonthlyRewardDetail(<Month>Month[month], ""))
             }
-            console.log("new Reward card new YearlyRewardPerCard" + JSON.stringify(this))
+            // console.log("new Reward card new YearlyRewardPerCard" + JSON.stringify(this))
         }
 
 

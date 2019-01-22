@@ -21,42 +21,49 @@ export class RewardCardService {
   }
 
   private async loadFromLocalStorage() {
-    try {
-        let tmp = await Promise.resolve(this.storage.get("rewardCards"))
-        console.log(JSON.stringify(tmp));      
-        for (let card of <RewardCard[]>tmp) {
-          this.cards.set(card.cardId, card);
-        }
+      let tmp = await Promise.resolve(this.storage.get("rewardCards"))
+      // console.log(JSON.stringify(tmp));      
+      for (let card of <RewardCard[]>tmp) {
+        this.cards.set(card.cardId, card);
+      }
       this.loaded = true;
-    } catch (error) {
-      console.log(error);
-    }
+      return tmp;
   }
 
   public async getCurrentCards() {
-    let ret: RewardCard[] = [];
     if (!this.loaded) {
-      console.log("fucking call me 01")
-        await Promise.resolve(this.loadFromLocalStorage()) 
-        this.cards.forEach((card, idKey, m) => {
-          ret.push(card);
-        });
-      console.log("fucking call me 02")
+        return <RewardCard[]>await Promise.resolve(this.loadFromLocalStorage()) 
     } else {
+      let ret: RewardCard[] = [];
       this.cards.forEach((card, idKey, m) => {
         ret.push(card);
       });  
+      return ret;
     }
-    return ret;
   }
 
   public newBlankCard() {
-    return new RewardCard(RewardCard.getNextCardId());
+    return new RewardCard("");
   }
 
-  public saveCard(rewardCard: RewardCard) {
+  public async saveCard(rewardCard: RewardCard) {
+    if (!this.loaded) {
+      await Promise.resolve(this.loadFromLocalStorage()) 
+    }
+    rewardCard.cardId = RewardCard.getNextCardId();
     this.cards.set(rewardCard.cardId, rewardCard);
     this.storage.set("rewardCards", this.getCurrentCards());
+  }
+
+  public async deleteCard(rewardCard: RewardCard) {
+    if (!this.loaded) {
+      await Promise.resolve(this.loadFromLocalStorage()) 
+    }
+    // console.log("to-be-deleted " + JSON.stringify(rewardCard))
+    // console.log("size before " + this.cards.size)
+    this.cards.delete(rewardCard.cardId);
+    this.storage.set("rewardCards", this.getCurrentCards());
+    // console.log("size after " + this.cards.size)
   }
 }
 

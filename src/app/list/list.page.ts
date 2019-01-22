@@ -31,10 +31,6 @@ export class ListPage implements OnInit {
   }
 
   updateCurrentCards() {    
-    var length = 0
-    if (this.currentCards && this.currentCards.length > 0) {
-      length = this.currentCards.length;
-    }
     this.cardInfoService.getCurrentCards().then((tmp) => {
       this.currentCards = tmp
     });
@@ -88,10 +84,19 @@ export class ListPage implements OnInit {
     });
     // return await modal.present();
     modal.present();
-    const { data } = await modal.onDidDismiss();
+    const { data, role } = await modal.onDidDismiss();
     if (data) {
-      console.log("parent page got data " + JSON.stringify(data));
-      this.cardInfoService.saveCard(data);
+      // console.log("parent page got data " + JSON.stringify(data));
+      switch (role) {
+        case "save":
+          this.cardInfoService.saveCard(data);
+          break;
+        case "delete":
+          this.cardInfoService.deleteCard(data);
+          break;
+        default:
+          break;
+      }
       this.updateCurrentCards();
     } else {
       console.log("modal cancelled ...no data ");

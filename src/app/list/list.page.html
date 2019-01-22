@@ -20,10 +20,10 @@
   </ion-list>
 
   <ion-list>
-      <ion-item-divider color="light">
+      <ion-item color="light">
         Credit card name
         <div class="item-note" slot="end">Reward detail</div>
-      </ion-item-divider>
+      </ion-item>
     <ion-item *ngFor="let item of currentCards; let idx=index" (click)="updateCard(item)">
       <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
       {{item.cardName}}
