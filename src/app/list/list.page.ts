@@ -21,7 +21,7 @@ export class ListPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.currentMonth = <Month>Month[RewardCard.getCurrentMonth()];
+    this.currentCards = []
     this.currentMonth = <Month>Month[RewardCard.getCurrentMonth()];
     this.updateCurrentCards();
   }
@@ -30,10 +30,14 @@ export class ListPage implements OnInit {
     return RewardCard.getAllRewardMonth();
   }
 
-  updateCurrentCards() {
-    if (this.currentCards && this.currentCards.length > 0)
-      this.currentCards.splice(0, this.currentCards.length)
-    this.currentCards = this.cardInfoService.getCurrentCards();
+  updateCurrentCards() {    
+    var length = 0
+    if (this.currentCards && this.currentCards.length > 0) {
+      length = this.currentCards.length;
+    }
+    this.cardInfoService.getCurrentCards().then((tmp) => {
+      this.currentCards = tmp
+    });
   }
 
   getCurrentMonthReward(card: RewardCard) {
@@ -62,11 +66,11 @@ export class ListPage implements OnInit {
     this.presentToast("FAB button clicked");
   }
 
-  private newCard() {
+  newCard() {
     this.displayCardInModal(this.cardInfoService.newBlankCard());
   }
 
-  private updateCard(cardItem: RewardCard) {
+  updateCard(cardItem: RewardCard) {
     console.log("update current card " + JSON.stringify(cardItem))
     this.displayCardInModal(cardItem);
   }

@@ -1,7 +1,7 @@
 {
-  "name": "CashBackLookup",
+  "name": "com.mais_housing.cashbacklookup",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Nguyen Mai",
   "homepage": "http://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -10,9 +10,15 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "android_build": "ionic cordova build android",
-    "android_run": "ionic cordova run android --device",
-    "emulate_android": "ionic cordova emulate android --emulator",
+    "build:ios": "ionic cordova build ios --prod --release",
+    "build:android": "ionic cordova build android --prod --release",
+
+    "run:ios": "ionic cordova run ios --device",
+    "run:android": "ionic cordova run android --device",
+
+    "emulate:ios": "ionic cordova emulate ios --emulator",
+    "emulate:android": "ionic cordova emulate android --emulator",
+
     "adb_log": "adb logcat"
   },
   "private": true,

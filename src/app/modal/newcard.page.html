@@ -20,8 +20,8 @@
         </ion-label>
       </ion-item-divider>
       <div formArrayName="rewardDetail">  
-        <ion-item *ngFor="let rewardMonth of cardInputForm.controls.rewardDetail.controls; let i=index" [formGroupName]="i"> 
-          <ion-label position="floating">{{rewardMonth.controls.month.value}}</ion-label>
+        <ion-item *ngFor="let rewardMonth of card.rewardDetail; let i=index" [formGroupName]="i"> 
+          <ion-label position="floating">{{rewardMonth.month}}</ion-label>
           <ion-input clearOnEdit name="rewardNote" formControlName="rewardDetail"></ion-input>
         </ion-item>
       </div>

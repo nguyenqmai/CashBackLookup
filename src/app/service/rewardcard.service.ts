@@ -8,28 +8,45 @@ import { RewardCard } from '../model/reward-card.type';
   providedIn: 'root'
 })
 export class RewardCardService {
-  private cards = new Map<string, RewardCard>();
+  loaded: boolean = false;
+  cards = new Map<string, RewardCard>();
 
 
   constructor(private storage: Storage) { 
-    this.storage.get("rewardCards").then((value) => {
-      if (value) {
-        <RewardCard[]>value.forEach(card => {this.cards.set(card.cardId, card);})
-      } else {
-        for (let i = 1; i < 2; i++) {
-          var cardId = RewardCard.getNextCardId() + i;
-          this.saveCard(new RewardCard(cardId, 'CCard ' + i));
-        }
-      }
-    });
   }
 
-  public getCurrentCards() {
-    var ret: RewardCard[] = [];
-    this.cards.forEach((card, idKey, m) => {
-      ret.push(card);
-    });
+  
+  private async f01() {
+    return ;
+  }
 
+  private async loadFromLocalStorage() {
+    try {
+        let tmp = await Promise.resolve(this.storage.get("rewardCards"))
+        console.log(JSON.stringify(tmp));      
+        for (let card of <RewardCard[]>tmp) {
+          this.cards.set(card.cardId, card);
+        }
+      this.loaded = true;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async getCurrentCards() {
+    let ret: RewardCard[] = [];
+    if (!this.loaded) {
+      console.log("fucking call me 01")
+        await Promise.resolve(this.loadFromLocalStorage()) 
+        this.cards.forEach((card, idKey, m) => {
+          ret.push(card);
+        });
+      console.log("fucking call me 02")
+    } else {
+      this.cards.forEach((card, idKey, m) => {
+        ret.push(card);
+      });  
+    }
     return ret;
   }
 
@@ -42,3 +59,5 @@ export class RewardCardService {
     this.storage.set("rewardCards", this.getCurrentCards());
   }
 }
+
+
