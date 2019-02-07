@@ -10,22 +10,29 @@
     <form [formGroup]="cardInputForm">
       <ion-list>
         <ion-item>
-        <ion-label position="floating">Credit card name</ion-label>
-        <ion-input clearOnEdit name="creditCardName" formControlName="cardName"></ion-input>
-      </ion-item>
-
-      <ion-item-divider color="secondary">
-        <ion-label>
-          Reward note for each month
-        </ion-label>
-      </ion-item-divider>
-      <div formArrayName="rewardDetail">  
-        <ion-item *ngFor="let rewardMonth of card.rewardDetail; let i=index" [formGroupName]="i"> 
-          <ion-label position="floating">{{rewardMonth.month}}</ion-label>
-          <ion-input clearOnEdit name="rewardNote" formControlName="rewardDetail"></ion-input>
+          <ion-label position="floating">Credit card name</ion-label>
+          <ion-input clearOnEdit name="creditCardName" formControlName="cardName"></ion-input>
         </ion-item>
-      </div>
+
+        <ion-item>
+          <ion-label position="floating">Extra note</ion-label>
+          <ion-input clearOnEdit name="note" formControlName="note"></ion-input>
+        </ion-item>
+
+        <ion-item-divider color="secondary">
+          <ion-label>
+            <h2>Reward note for each month</h2>
+          </ion-label>
+        </ion-item-divider>
+
+        <div formArrayName="rewardDetail">  
+          <ion-item *ngFor="let rewardMonth of card.rewardDetail; let i=index" [formGroupName]="i"> 
+            <ion-label position="floating">Month of {{rewardMonth.month}}</ion-label>
+            <ion-input clearOnEdit name="rewardNote" formControlName="rewardDetail"></ion-input>
+          </ion-item>
+        </div>
       </ion-list>
+
       <ion-grid>
         <ion-row>
           <ion-col>

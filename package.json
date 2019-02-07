@@ -11,14 +11,11 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:ios": "ionic cordova build ios --prod --release",
-    "build:android": "ionic cordova build android --prod --release",
-
+    "build:android": "ionic cordova build android --prod",
     "run:ios": "ionic cordova run ios --device",
     "run:android": "ionic cordova run android --device",
-
     "emulate:ios": "ionic cordova emulate ios --emulator",
     "emulate:android": "ionic cordova emulate android --emulator",
-
     "adb_log": "adb logcat"
   },
   "private": true,

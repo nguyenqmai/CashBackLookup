@@ -14,12 +14,7 @@ export class RewardCardService {
 
   constructor(private storage: Storage) { 
   }
-
-  
-  private async f01() {
-    return ;
-  }
-
+ 
   private async loadFromLocalStorage() {
       let tmp = await Promise.resolve(this.storage.get("rewardCards"))
       // console.log(JSON.stringify(tmp));      
@@ -50,7 +45,10 @@ export class RewardCardService {
     if (!this.loaded) {
       await Promise.resolve(this.loadFromLocalStorage()) 
     }
-    rewardCard.cardId = RewardCard.getNextCardId();
+
+    if (rewardCard.cardId.length == 0) {
+      rewardCard.cardId = RewardCard.getNextCardId();
+    }
     this.cards.set(rewardCard.cardId, rewardCard);
     this.storage.set("rewardCards", this.getCurrentCards());
   }

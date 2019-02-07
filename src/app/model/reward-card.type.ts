@@ -18,12 +18,14 @@ export class RewardCard {
 
     cardId: string;
     cardName: string;
+    note: string;
     rewardDetail: MonthlyRewardDetail[];
 
 
-    constructor(cardId: string, cardName?: string, rewardDetail?: MonthlyRewardDetail[]) {
+    constructor(cardId: string, cardName?: string, note?: string, rewardDetail?: MonthlyRewardDetail[]) {
         this.cardId = cardId;
         this.cardName = cardName ? cardName : "";
+        this.note = note ? note : "";
         if (rewardDetail) {
             this.rewardDetail = rewardDetail;
             // console.log("new Reward card " + JSON.stringify(this))

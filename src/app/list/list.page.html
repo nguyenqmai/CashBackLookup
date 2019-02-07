@@ -20,16 +20,18 @@
   </ion-list>
 
   <ion-list>
-      <ion-item color="light">
-        Credit card name
-        <div class="item-note" slot="end">Reward detail</div>
-      </ion-item>
-    <ion-item *ngFor="let item of currentCards; let idx=index" (click)="updateCard(item)">
+    <ion-item color="light">
+      Credit card name
+      <div class="item-note" slot="end">Reward detail</div>
+    </ion-item>
+
+    <ion-item detail *ngFor="let item of currentCards; let idx=index" (click)="updateCard(item)">
       <!-- <ion-icon [name]="item.icon" slot="start"></ion-icon> -->
-      {{item.cardName}}
-      <div class="item-note" slot="end">
-        {{getCurrentMonthReward(item)}}
-      </div>
+      <ion-label text-wrap>
+        <h2>{{item.cardName}}</h2>
+        <h4>{{item.note}}</h4>
+      </ion-label>
+      <div class="item-note" slot="end">{{getCurrentMonthReward(item)}}</div>
     </ion-item>
   </ion-list>
   <!--
